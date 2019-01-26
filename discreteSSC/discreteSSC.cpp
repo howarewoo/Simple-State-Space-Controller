@@ -22,9 +22,9 @@
 // Constructor /////////////////////////////////////////////////////////////////
 // Function that handles the creation and setup of instances
 
-SSC::SSC(double A[4][4], double B[4][1], double K[4], double Ts, long double Setpoints[4][1], long double U[4][1], long double X[4][1]){
+SSC::SSC(double A[][], double B[][], double K[], double Ts, long double Setpoints[][], long double U[][], long double X[][]){
   // initialize this instance's variables
-  for (int i = 0; i < 4; i++){
+  for (int i = 0; i < sizeof(data);; i++){
     for (int j = 0; j < 4; j++){
       myA[i][j] = A[i][j];
       myB[i][j] = B[i][j];
@@ -33,6 +33,7 @@ SSC::SSC(double A[4][4], double B[4][1], double K[4], double Ts, long double Set
       mySetpoints[i][j] = Setpoints[i][j];
       myU[i][j] = U[i][j];
       myX[i][j] = X[i][j];
+      numStates = sizeof(K);
     }
 
     // do whatever is required to initialize the library
@@ -60,18 +61,18 @@ void SSC::setSSC(){
   }
 }
 
-long double SSC::update(long double value1, int inState1, long double value2, int inState2, int outState){
+long double SSC::update(long double U[][]){
   // eventhough this function is public, it can access
   // and modify this library's private variables
   unsigned long now = micros();
   unsigned long timeChange = (now - lastTime);
-  mySetpoints[0][0] = myU[0][0];
   if(timeChange>=sampleTime){
     // Serial.println(timeChange);
-    myU[inState1][0] = value1;
-    myU[inState2][0] = value2;
     double myError[4][1];
     double myXdot[4][1];
+      
+      
+    for
 
     // From matlab:
     // y(i,:)=(((A-B*K)*(y(i-1,:)'-[dest; 0; pi; 0]))*Ts)+y(i-1,:)';
@@ -109,7 +110,3 @@ long double SSC::update(long double value1, int inState1, long double value2, in
 
 // Private Methods /////////////////////////////////////////////////////////////
 // Functions only available to other functions in this library
-
-void SSC::doSomethingSecret(void)
-{
-}

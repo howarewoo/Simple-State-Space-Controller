@@ -21,7 +21,6 @@
 class SSC{
   // library-accessible "private" interface
   private:
-    void doSomethingSecret(void);
 
     double myA[4][4];
     double myB[4][1];
@@ -30,6 +29,7 @@ class SSC{
     long double mySetpoints[4][1];
     long double myX[4][1];
     long double myU[4][1];
+    int numStates;
 
     double sampleTime;
     int lastTime;
@@ -41,11 +41,11 @@ class SSC{
 
   // user-accessible "public" interface
   public:
-    SSC(double [4][4], double [4][1], double [4], double, long double [4][1], long double [4][1], long double [4][1]);
+    SSC(double [][], double [][], double [], double, long double [][], long double [][], long double [][]);
 
     void setSSC(void);
 
-    long double update(long double, int, long double, int, int);
+    long double update(long double, long double);
 };
 
 #endif
